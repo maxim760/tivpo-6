@@ -8,6 +8,7 @@ export interface IMaster {
 
 export type IClient = {
   getName(): string,
+  getMaster(): Master | null,
   setMaster(master: Master): void,
   clearMaster(): Promise<void>
 }
