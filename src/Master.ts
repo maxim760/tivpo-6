@@ -16,7 +16,7 @@ export class Master implements IMaster {
   private publish(): void {
     EventBus.publish(Channels.WaitMaster, this, 1)
   }
-  private subscribe(withLog: boolean = false): void {
+  private subscribe(withLog = false): void {
     assert.equal(this.client, null, "Не должно быть клиента на момент метода subscribe класса Master")
     EventBus.subscribe<Client>(Channels.WaitClient, (client) => {
       withLog && console.log(this.name + " дождался клиента: " + client.getName())
@@ -49,7 +49,7 @@ export class Master implements IMaster {
     this.clearClient()
     this.subscribe(true)
     assert.equal(this.client, null, "После окончания стрижки клиента у мастера быть не должно в методе make класса Mater")
-    if (!!EventBus.channels[Channels.WaitMaster]?.length) {
+    if (EventBus.channels[Channels.WaitMaster]?.length) {
       this.publish()
     } else {
       console.log(this.name + " свободен")
